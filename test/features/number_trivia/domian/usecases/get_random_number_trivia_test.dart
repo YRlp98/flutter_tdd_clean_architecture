@@ -19,17 +19,17 @@ void main() {
 
   final tNumberTrivia = NumberTrivia(text: 'test', number: 1);
 
-  test('Should get form the repository', () async {
+  test('Should get trivia form the repository', () async {
     // arrange
     when(mockNumberTriviaRepository.getRandomNumberTrivia())
         .thenAnswer((_) async => Right(tNumberTrivia));
 
     // act
-    final result = await usecases();
+    final result = await usecases(NoParams());
 
     // assert
     expect(result, Right(tNumberTrivia));
-    verify(mockNumberTriviaRepository.getConcreteNumberTrivia(tNumber));
+    verify(mockNumberTriviaRepository.getRandomNumberTrivia());
     verifyNoMoreInteractions(mockNumberTriviaRepository);
   });
 }
