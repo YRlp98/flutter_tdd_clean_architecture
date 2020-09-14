@@ -26,7 +26,7 @@ void main() {
         .thenAnswer((_) async => Right(tNumberTrivia));
 
     // act
-    final result = await usecases(number: tNumber);
+    final result = await usecases(Params(number: tNumber));
 
     // assert
     expect(result, Right(tNumberTrivia));
