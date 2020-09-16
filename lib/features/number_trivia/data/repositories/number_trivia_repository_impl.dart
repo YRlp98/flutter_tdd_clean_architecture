@@ -9,6 +9,8 @@ import '../../domain/repositories/number_trivia_repository.dart';
 import '../datasources/numbe_trivia_remote_data_source.dart';
 import '../datasources/number_trivia_local_data_source.dart';
 
+typedef Future<NumberTrivia> _ConcreteOrRandomChooser();
+
 class NumberTriviaRepositoryImpl implements NumberTriviaRepository {
   final NumberTriviaRemoteDataSource remoteDataSource;
   final NumberTriviaLocalDataSource localDataSource;
@@ -36,7 +38,7 @@ class NumberTriviaRepositoryImpl implements NumberTriviaRepository {
   }
 
   Future<Either<Failure, NumberTrivia>> _getTrivia(
-    Future<NumberTrivia> Function() getConcretedOrRandom,
+    _ConcreteOrRandomChooser getConcretedOrRandom,
   ) async {
     if (await networkInfo.isConnected) {
       try {
