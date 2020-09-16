@@ -6,11 +6,11 @@ import 'package:data_connection_checker/data_connection_checker.dart';
 class MockDataConnectionChecker extends Mock implements DataConnectionChecker {}
 
 void main() {
-  NetworInfoImpl networInfoImpl;
+  NetworkInfoImpl networInfoImpl;
   MockDataConnectionChecker mockDataConnectionChecker;
 
   setUp(() {
     mockDataConnectionChecker = MockDataConnectionChecker();
-    networInfoImpl = NetworkInfo(mockDataConnectionChecker);
+    networInfoImpl = NetworkInfoImpl(mockDataConnectionChecker);
   });
 }
