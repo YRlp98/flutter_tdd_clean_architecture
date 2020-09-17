@@ -17,14 +17,14 @@ class NumberTriviaLocalDataSourceImpl implements NumberTriviaLocalDataSource {
   NumberTriviaLocalDataSourceImpl({@required this.sharedPreferences});
 
   @override
-  Future<void> cacheNumberTrivia(NumberTriviaModel) {
-    // TODO: implement cacheNumberTrivia
+  Future<NumberTriviaModel> getLastNumberTrivia() {
+    // TODO: implement getLastNumberTrivia
     return null;
   }
 
   @override
-  Future<NumberTriviaModel> getLastNumberTrivia() {
-    // TODO: implement getLastNumberTrivia
+  Future<void> cacheNumberTrivia(NumberTriviaModel) {
+    // TODO: implement cacheNumberTrivia
     return null;
   }
 }
