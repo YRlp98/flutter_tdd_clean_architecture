@@ -1,8 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
-import '../models/number_trivia_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../models/number_trivia_model.dart';
 
 abstract class NumberTriviaLocalDataSource {
   /// Gets the chached [NumberTriviaModel] which was gotten the last time
@@ -13,6 +14,8 @@ abstract class NumberTriviaLocalDataSource {
   Future<void> cacheNumberTrivia(NumberTriviaModel);
 }
 
+const CACHED_NUMBER_TRIVIA = 'CACHED_NUMBER_TRIVIA';
+
 class NumberTriviaLocalDataSourceImpl implements NumberTriviaLocalDataSource {
   final SharedPreferences sharedPreferences;
 
@@ -20,7 +23,7 @@ class NumberTriviaLocalDataSourceImpl implements NumberTriviaLocalDataSource {
 
   @override
   Future<NumberTriviaModel> getLastNumberTrivia() {
-    final jsonString = sharedPreferences.getString('CACHED_NUMBER_TRIVIA');
+    final jsonString = sharedPreferences.getString(CACHED_NUMBER_TRIVIA);
     return Future.value(NumberTriviaModel.fromJson(json.decode(jsonString)));
   }
 
