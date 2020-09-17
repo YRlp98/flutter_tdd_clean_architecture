@@ -1,3 +1,4 @@
+import 'package:flutter_tdd_clean_architecture/features/number_trivia/data/datasources/number_trivia_local_data_source.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -10,6 +11,7 @@ void main() {
 
   setUp(() {
     mockSharedPreferences = MockSharedPreferences();
-    dataSource = NumberTriviaLocalDataSourceImpl(mockSharedPreferences);
+    dataSource = NumberTriviaLocalDataSourceImpl(
+        sharedPreferences: mockSharedPreferences);
   });
 }
