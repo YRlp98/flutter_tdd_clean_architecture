@@ -11,3 +11,17 @@ abstract class NumberTriviaRemoteDataSource {
   /// Throws a [ServerException] for all error codes.
   Future<NumberTrivia> getRandomNumberTrivia();
 }
+
+class NumberTriviaRemoteDataSourceImpl implements NumberTriviaRemoteDataSource {
+  @override
+  Future<NumberTrivia> getConcreteNumberTrivia(int number) {
+    // TODO: implement getConcreteNumberTrivia
+    return null;
+  }
+
+  @override
+  Future<NumberTrivia> getRandomNumberTrivia() {
+    // TODO: implement getRandomNumberTrivia
+    return null;
+  }
+}
