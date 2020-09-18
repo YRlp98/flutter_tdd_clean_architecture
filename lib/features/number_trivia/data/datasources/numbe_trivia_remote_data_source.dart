@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter_tdd_clean_architecture/core/error/exceptions.dart';
 import 'package:flutter_tdd_clean_architecture/features/number_trivia/data/models/number_trivia_model.dart';
 import 'package:http/http.dart' as http;
 
@@ -30,12 +31,24 @@ class NumberTriviaRemoteDataSourceImpl implements NumberTriviaRemoteDataSource {
       headers: {'Content-Type': 'application/json'},
     );
 
-    return NumberTriviaModel.fromJson(json.decode(response.body));
+    if (response.statusCode == 200) {
+      return NumberTriviaModel.fromJson(json.decode(response.body));
+    } else {
+      throw ServerException();
+    }
   }
 
   @override
-  Future<NumberTrivia> getRandomNumberTrivia() {
-    // TODO: implement getRandomNumberTrivia
-    return null;
+  Future<NumberTrivia> getRandomNumberTrivia() async {
+    final response = await client.get(
+      'http://numbersapi.com/random',
+      headers: {'Content-Type': 'application/json'},
+    );
+
+    if (response.statusCode == 200) {
+      return NumberTriviaModel.fromJson(json.decode(response.body));
+    } else {
+      throw ServerException();
+    }
   }
 }
