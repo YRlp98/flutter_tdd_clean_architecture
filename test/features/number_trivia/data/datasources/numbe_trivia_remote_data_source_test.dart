@@ -29,8 +29,10 @@ void main() {
       // act
       dataSource.getConcreteNumberTrivia(tNumber);
       // asert
-      verify(mockHttpClient.get('http://numbersapi.com/$tNumber',
-          headers: {'Content-Type': 'application/json'}));
+      verify(mockHttpClient.get(
+        'http://numbersapi.com/$tNumber',
+        headers: {'Content-Type': 'application/json'},
+      ));
     });
   });
 }
