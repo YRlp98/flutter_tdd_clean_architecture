@@ -21,7 +21,7 @@ class NumberTriviaRemoteDataSourceImpl implements NumberTriviaRemoteDataSource {
   NumberTriviaRemoteDataSourceImpl({@required this.client});
 
   @override
-  Future<NumberTrivia> getConcreteNumberTrivia(int number) {
+  Future<NumberTrivia> getConcreteNumberTrivia(int number) async {
     client.get(
       'http://numbersapi.com/$number',
       headers: {'Content-Type': 'application/json'},
