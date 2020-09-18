@@ -1,22 +1,21 @@
 import 'dart:convert';
 
-import 'package:flutter/foundation.dart';
-import 'package:flutter_tdd_clean_architecture/core/error/exceptions.dart';
-import 'package:flutter_tdd_clean_architecture/features/number_trivia/data/models/number_trivia_model.dart';
 import 'package:http/http.dart' as http;
+import 'package:meta/meta.dart';
 
-import '../../domain/entites/number_trivia.dart';
+import '../../../../core/error/exceptions.dart';
+import '../models/number_trivia_model.dart';
 
 abstract class NumberTriviaRemoteDataSource {
   /// Calls the http://numbersapi.com/{number} endpoint.
   ///
-  /// Theows a [ServerExecption] for all error codes.
-  Future<NumberTrivia> getConcreteNumberTrivia(int number);
+  /// Throws a [ServerException] for all error codes.
+  Future<NumberTriviaModel> getConcreteNumberTrivia(int number);
 
   /// Calls the http://numbersapi.com/random endpoint.
   ///
   /// Throws a [ServerException] for all error codes.
-  Future<NumberTrivia> getRandomNumberTrivia();
+  Future<NumberTriviaModel> getRandomNumberTrivia();
 }
 
 class NumberTriviaRemoteDataSourceImpl implements NumberTriviaRemoteDataSource {
@@ -25,24 +24,19 @@ class NumberTriviaRemoteDataSourceImpl implements NumberTriviaRemoteDataSource {
   NumberTriviaRemoteDataSourceImpl({@required this.client});
 
   @override
-  Future<NumberTrivia> getConcreteNumberTrivia(int number) async {
-    final response = await client.get(
-      'http://numbersapi.com/$number',
-      headers: {'Content-Type': 'application/json'},
-    );
-
-    if (response.statusCode == 200) {
-      return NumberTriviaModel.fromJson(json.decode(response.body));
-    } else {
-      throw ServerException();
-    }
-  }
+  Future<NumberTriviaModel> getConcreteNumberTrivia(int number) =>
+      _getTriviaFromUrl('http://numbersapi.com/$number');
 
   @override
-  Future<NumberTrivia> getRandomNumberTrivia() async {
+  Future<NumberTriviaModel> getRandomNumberTrivia() =>
+      _getTriviaFromUrl('http://numbersapi.com/random');
+
+  Future<NumberTriviaModel> _getTriviaFromUrl(String url) async {
     final response = await client.get(
-      'http://numbersapi.com/random',
-      headers: {'Content-Type': 'application/json'},
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+      },
     );
 
     if (response.statusCode == 200) {
