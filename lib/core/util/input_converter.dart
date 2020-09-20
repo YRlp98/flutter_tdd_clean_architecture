@@ -3,7 +3,11 @@ import 'package:flutter_tdd_clean_architecture/core/error/failures.dart';
 
 class InputConverter {
   Either<Failure, int> stringToUnSignedInteger(String str) {
-    return Right(int.parse(str));
+    try {
+      return Right(int.parse(str));
+    } on FormatException {
+      return Left(InvalidInputFailure());
+    }
   }
 }
 
