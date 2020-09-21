@@ -50,6 +50,7 @@ void main() {
           .thenReturn(Right(tNumberParsed));
       // act
       bloc.dispatch(GetTriviaForConcreteNumber(tNumberString));
+      await untilCalled(mockInputConverter.stringToUnSignedInteger(any));
       // assert
       verify(mockInputConverter.stringToUnSignedInteger(tNumberString));
     });
