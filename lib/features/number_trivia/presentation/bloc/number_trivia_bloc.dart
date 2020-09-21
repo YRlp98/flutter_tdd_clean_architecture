@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_tdd_clean_architecture/core/error/failures.dart';
 import 'package:flutter_tdd_clean_architecture/core/util/input_converter.dart';
 import 'package:flutter_tdd_clean_architecture/features/number_trivia/domain/entites/number_trivia.dart';
 import 'package:flutter_tdd_clean_architecture/features/number_trivia/domain/usecases/get_concrete_number_trivia.dart';
@@ -60,7 +61,11 @@ class NumberTriviaBloc extends Bloc<NumberTriviaEvent, NumberTriviaState> {
           final failureOrTrivia =
               await getConcreteNumberTrivia(Params(number: integer));
           yield failureOrTrivia.fold(
-            (failure) => Error(message: SERVER_FAILURE_MESSAGE),
+            (failure) => Error(
+              message: failure is ServerFailure
+                  ? SERVER_FAILURE_MESSAGE
+                  : CACHE_FAILURE_MESSAGE,
+            ),
             (trivia) => Loaded(trivia: trivia),
           );
         },
