@@ -60,14 +60,14 @@ void main() {
       // arrange
       when(mockInputConverter.stringToUnSignedInteger(any))
           .thenReturn(Left(InvalidInputFailure()));
-      // act
-      bloc.dispatch(GetTriviaForConcreteNumber(tNumberString));
       // assert
       final expected = [
         Empty(),
         Error(message: INVALID_FAILURE_MESSAGE),
       ];
       expectLater(bloc.state, emitsInOrder(expected));
+      // act
+      bloc.dispatch(GetTriviaForConcreteNumber(tNumberString));
     });
   });
 }
