@@ -43,12 +43,15 @@ void main() {
     final tNumberParsed = 1;
     final tNumberTrivia = NumberTrivia(number: 1, text: 'test trivia');
 
+    void setUpMockInputConverterSuccess() =>
+        when(mockInputConverter.stringToUnSignedInteger(any))
+            .thenReturn(Right(tNumberParsed));
+
     test(
         'should call the InputConverter to validate and convert the string to an unsigned integer',
         () async {
       // arrange
-      when(mockInputConverter.stringToUnSignedInteger(any))
-          .thenReturn(Right(tNumberParsed));
+      setUpMockInputConverterSuccess();
       // act
       bloc.dispatch(GetTriviaForConcreteNumber(tNumberString));
       await untilCalled(mockInputConverter.stringToUnSignedInteger(any));
@@ -72,8 +75,7 @@ void main() {
 
     test('should get data from the concrete use case', () async {
       // arrange
-      when(mockInputConverter.stringToUnSignedInteger(any))
-          .thenReturn(Right(tNumberParsed));
+      setUpMockInputConverterSuccess();
       when(mockGetConcreteNumberTrivia(any))
           .thenAnswer((_) async => Right(tNumberTrivia));
       // act
