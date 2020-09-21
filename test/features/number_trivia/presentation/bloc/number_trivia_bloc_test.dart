@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_tdd_clean_architecture/core/error/failures.dart';
 import 'package:flutter_tdd_clean_architecture/core/util/input_converter.dart';
 import 'package:flutter_tdd_clean_architecture/features/number_trivia/domain/entites/number_trivia.dart';
 import 'package:flutter_tdd_clean_architecture/features/number_trivia/domain/usecases/get_concrete_number_trivia.dart';
@@ -101,5 +102,23 @@ void main() {
       // act
       bloc.dispatch(GetTriviaForConcreteNumber(tNumberString));
     });
+
+    test('should emit [Loading, Error] when getting data fails',
+        () async {
+      // arrange
+      setUpMockInputConverterSuccess();
+      when(mockGetConcreteNumberTrivia(any))
+          .thenAnswer((_) async => Left(ServerFailure()));
+      // assert later
+      final expected = [
+        Empty(),
+        Loading(),
+        Error(message: SERVER_FAILURE_MESSAGE),
+      ];
+      expectLater(bloc.state, emitsInOrder(expected));
+      // act
+      bloc.dispatch(GetTriviaForConcreteNumber(tNumberString));
+    });
+
   });
 }
